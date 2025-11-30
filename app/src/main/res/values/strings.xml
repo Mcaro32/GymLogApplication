@@ -9,4 +9,8 @@
     <string name="reps">Reps</string>
     <string name="Enter_a_weight">Enter a Weight</string>
     <string name="log">Log!</string>
+    <string name="login_welcome">Welcome to the GymLog! \nPlease sign in.</string>
+    <string name="username">username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>
