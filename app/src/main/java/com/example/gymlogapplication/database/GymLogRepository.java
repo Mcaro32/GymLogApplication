@@ -3,6 +3,8 @@ package com.example.gymlogapplication.database;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.gymlogapplication.database.entities.GymLog;
 import com.example.gymlogapplication.MainActivity;
 import com.example.gymlogapplication.database.entities.User;
@@ -70,9 +72,22 @@ public class GymLogRepository {
             gymLogDAO.insert(gymLog);
         });
     }
+
     public void insertUser(User... user) {
         GymLogDatabase.databaseWriteExecutor.execute(() -> {
             userDAO.insert(user);
         });
     }
+
+    public LiveData<User> getUserByUserName(String username) {
+
+        return userDAO.getUserByUserName(username);
+    }
+
+    public LiveData<User> getUserByUserID(int userId) {
+
+        return userDAO.getUserByUserID(userId);
+    }
+
 }
+
