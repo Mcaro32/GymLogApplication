@@ -22,11 +22,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymlogapplication.database.GymLogRepository;
 import com.example.gymlogapplication.database.entities.GymLog;
 import com.example.gymlogapplication.database.entities.User;
 import com.example.gymlogapplication.databinding.ActivityMainBinding;
+import com.example.gymlogapplication.viewHolders.GymLogAdapter;
+import com.example.gymlogapplication.viewHolders.GymLogViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private GymLogRepository repository;
+
+    private GymLogViewModel gymLogViewModel;
     public static final String TAG = "MC_GYMLOG";
     String mExercise = " ";
     double mWeight = 0.0;
@@ -58,8 +65,20 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        gymLogViewModel = new ViewModelProvider(this).get(GymLogViewModel.class);
+
+
+        RecyclerView recyclerView = binding.logDisplayRecyclerView;
+final GymLogAdapter adapter = new GymLogAdapter((new GymLogAdapter.GymLogDiff()));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         repository = GymLogRepository.getRepository(getApplication());
         loginUser(savedInstanceState);
+
+        gymLogViewModel.getAllLogsById(loggedInUserId).observe(this, gymLogs -> {
+            adapter.submitList(gymLogs);
+        });
 
 //user is not logged in at this point, go to login screen
         if (loggedInUserId == -1) {
@@ -69,24 +88,28 @@ public class MainActivity extends AppCompatActivity {
         updateSharedPreference();
 
         repository = GymLogRepository.getRepository(getApplication());
-
-        binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
-        updateDisplay();
+        //TODO: Remove two lines below
+        //binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
+        //updateDisplay();
         binding.logButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getInformationFromDisplay();
                 insertGymLogRecord();
-                updateDisplay();
+                //TODO: Remove line below
+                //updateDisplay();
             }
         });
 
-        binding.exerciseInputEditText.setOnClickListener(new View.OnClickListener() {
+      /*  TODO: Remove this block
+      binding.exerciseInputEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateDisplay();
             }
         });
+
+       */
     }
 
     private void loginUser(Bundle savedInstanceState) {
@@ -198,18 +221,18 @@ public class MainActivity extends AppCompatActivity {
         GymLog log = new GymLog(mExercise, mWeight, mReps, loggedInUserId);
         repository.insertGymLog(log);
     }
-
+@Deprecated
     private void updateDisplay() {
         ArrayList<GymLog> allLogs = repository.getAllLogsByUserId(loggedInUserId);
         if (allLogs.isEmpty()) {
-            binding.logDisplayTextView.setText("Nothing to show, time to hit the gym!");
+           // binding.logDisplayTextView.setText("Nothing to show, time to hit the gym!");
         }
         StringBuilder sb = new StringBuilder();
         for (GymLog log : allLogs) {
             sb.append(log);
         }
 
-        binding.logDisplayTextView.setText(sb.toString());
+        //binding.logDisplayTextView.setText(sb.toString());
     }
 
     private void getInformationFromDisplay() {
