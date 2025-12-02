@@ -1,3 +1,9 @@
+/*
+ * @author: Manuel Caro
+ * @date: November 2025
+ * Assignment: HW3 - Gym Log Application
+ */
+
 package com.example.gymlogapplication.database;
 
 import android.app.Application;
@@ -68,6 +74,13 @@ public class GymLogRepository {
         return null;
     }
 
+    /**
+     * Inserts a GymLog entry into the database.
+     * Requirement that the repository must contain
+     * an insertGymLog() method.
+     *
+     * @param gymLog The GymLog entity to insert
+     */
     public void insertGymLog(GymLog gymLog) {
         GymLogDatabase.databaseWriteExecutor.execute(() -> {
             gymLogDAO.insert(gymLog);
@@ -85,6 +98,14 @@ public class GymLogRepository {
         return userDAO.getUserByUserName(username);
     }
 
+    /**
+     * Retrieves a User by their user ID.
+     * Requirement for a getUserById-style method
+     * in the repository.
+     *
+     * @param userId The ID of the user
+     * @return LiveData containing the User
+     */
     public LiveData<User> getUserByUserID(int userId) {
 
         return userDAO.getUserByUserID(userId);

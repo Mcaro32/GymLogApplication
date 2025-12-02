@@ -1,3 +1,10 @@
+/*
+ * @author: Manuel Caro
+ * @date: November 2025
+ * Assignment: HW3 - Gym Log Application
+ */
+
+
 package com.example.gymlogapplication.database.entities;
 
 import androidx.annotation.NonNull;
@@ -9,9 +16,16 @@ import com.example.gymlogapplication.database.GymLogDatabase;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Entity class representing a gym log entry.
+ */
 @Entity(tableName = GymLogDatabase.GYM_LOG_TABLE)
 
 public class GymLog {
+    /**
+     * Primary key for the GymLog table.
+     * Room annotation requirement: @PrimaryKey(autoGenerate = true)
+     */
     @PrimaryKey(autoGenerate = true)
 
     private int id;

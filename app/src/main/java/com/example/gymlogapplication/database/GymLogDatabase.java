@@ -1,3 +1,9 @@
+/*
+ * @author: Manuel Caro
+ * @date: November 2025
+ * Assignment: HW3 - Gym Log Application
+ */
+
 package com.example.gymlogapplication.database;
 
 import android.content.Context;
@@ -33,6 +39,13 @@ public abstract class GymLogDatabase extends RoomDatabase {
 
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    /**
+     * Static method used to retrieve the singleton instance of the database.
+     * Requirement for a static getDatabase() method.
+     *
+     * @param context Application context
+     * @return The GymLogDatabase instance
+     */
     static GymLogDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (GymLogDatabase.class) {
@@ -48,7 +61,10 @@ public abstract class GymLogDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
-
+    /**
+     * RoomDatabase.Callback used to populate the database when it is first created.
+     * Requirement for a RoomDatabase.Callback method.
+     */
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {

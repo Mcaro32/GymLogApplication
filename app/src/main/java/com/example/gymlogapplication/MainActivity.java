@@ -1,3 +1,10 @@
+/*
+ * @author: Manuel Caro
+ * @date: November 2025
+ * Assignment: HW3 - Gym Log Application
+ */
+
+
 package com.example.gymlogapplication;
 
 import android.app.DatePickerDialog;

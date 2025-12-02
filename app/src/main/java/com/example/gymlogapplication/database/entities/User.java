@@ -1,3 +1,10 @@
+/*
+ * @author: Manuel Caro
+ * @date: November 2025
+ * Assignment: HW3 - Gym Log Application
+ */
+
+
 package com.example.gymlogapplication.database.entities;
 
 import androidx.room.Entity;
@@ -7,9 +14,15 @@ import com.example.gymlogapplication.database.GymLogDatabase;
 
 import java.util.Objects;
 
+/**
+ * Entity class representing a User in the database.
+ */
 @Entity(tableName = GymLogDatabase.USER_TABLE)
 public class User {
-
+    /**
+     * Primary key for the User table.
+     * Requirement: @PrimaryKey(autoGenerate = true)
+     */
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String username;
